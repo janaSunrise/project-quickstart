@@ -67,8 +67,8 @@ else:
 # Initialize the source
 print(f"Initializing main.{project_lang_extension} ...")
 with open(path.join(project_full_path, f"main.{project_lang_extension}"), 'wb') as file:
-    if languages[project_language]:
-        file.write(bytes(languages[project_language].encode()))
+    if languages[project_language.lower()]:
+        file.write(bytes(languages[project_language.lower()].encode()))
     else:
         file.write(bytes("".encode()))
 
