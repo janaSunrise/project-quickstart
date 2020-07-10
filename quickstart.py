@@ -1,7 +1,10 @@
 from os import path, mkdir, popen
+from .languages import languages
+
 import sys
 import requests
 import time
+
 
 
 # Get the path to the project
@@ -64,7 +67,10 @@ else:
 # Initialize the source
 print(f"Initializing main.{project_lang_extension} ...")
 with open(path.join(project_full_path, f"main.{project_lang_extension}"), 'wb') as file:
-    file.write(bytes("".encode()))
+    if languages[project_language]:
+        file.write(bytes(languages[project_language].encode()))
+    else:
+        file.write(bytes("".encode()))
 
 
 # Git installed or not
