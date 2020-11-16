@@ -1,4 +1,4 @@
-from os import path, mkdir, popen
+import os
 from .languages import languages
 
 import sys
@@ -10,7 +10,7 @@ import time
 # Get the path to the project
 project_path = input("Enter the Path to your project Destination: ")
 
-if not path.isdir(project_path) and path.exists(project_path):
+if not os.path.isdir(project_path) and os.path.exists(project_path):
     print("Invalid Path Entered!")
     sys.exit(-1)
 
@@ -18,12 +18,12 @@ if not path.isdir(project_path) and path.exists(project_path):
 # Get the Project name
 project_name = input("Enter the name for the project: ")
 
-project_full_path = path.join(project_path, project_name)
+project_full_path = os.path.join(project_path, project_name)
 
 
 # Create The Project
 try:
-    mkdir(project_full_path)
+    os.mkdir(project_full_path)
 except OSError as error:
     print(error)
     sys.exit(-1)
@@ -45,7 +45,7 @@ readme_contents = f"""
 ### A project using the language {project_language}
 """
 
-with open(path.join(project_full_path, "readme.md"), 'wb') as file:
+with open(os.path.join(project_full_path, "readme.md"), 'wb') as file:
     file.write(bytes(readme_contents.encode()))
 
 time.sleep(1)
@@ -58,7 +58,7 @@ r = requests.get(f"https://www.toptal.com/developers/gitignore/api/{project_lang
 
 if r.status_code == 200:
     gitignore_contents = r.text.strip()
-    with open(path.join(project_full_path, ".gitignore"), 'wb') as file:
+    with open(os.path.join(project_full_path, ".gitignore"), 'wb') as file:
         file.write(bytes(gitignore_contents.encode()))
 else:
     print("Couldn't initalize gitignore due to Network Error!")
@@ -66,7 +66,7 @@ else:
 
 # Initialize the source
 print(f"Initializing main.{project_lang_extension} ...")
-with open(path.join(project_full_path, f"main.{project_lang_extension}"), 'wb') as file:
+with open(os.path.join(project_full_path, f"main.{project_lang_extension}"), 'wb') as file:
     if languages[project_language.lower()]:
         file.write(bytes(languages[project_language.lower()].encode()))
     else:
@@ -82,6 +82,6 @@ if answer == "n":
 
 
 # Execute git commands
-output = popen('git init && git add . && git commit -m "initial commit"').read()
+output = os.popen('git init && git add . && git commit -m "initial commit"').read()
 print(f"Output : {output}")
 print("Your project creation is finished.")

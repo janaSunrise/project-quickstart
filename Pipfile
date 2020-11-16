@@ -9,4 +9,4 @@ verify_ssl = true
 requests = "*"
 
 [scripts]
-start = "python -u ./quickstart.py"
+start = "python src/quickstart.py"
