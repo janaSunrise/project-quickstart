@@ -5,6 +5,8 @@ import sys
 import requests
 import time
 
+from colorama import init, Fore
+
 
 
 # Get the path to the project
