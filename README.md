@@ -8,3 +8,7 @@ This can
 * Generate The Readme
 * Generate the gitignore
 * Add it to git
+
+## Tech Stack used
+
+- `Requests`: To obtain the gitignore for a certain type, or language.
