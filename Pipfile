@@ -10,4 +10,4 @@ requests = "*"
 colorama = "*"
 
 [scripts]
-start = "python src/quickstart.py"
+start = "python -m src"

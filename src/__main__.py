@@ -25,7 +25,7 @@ project_full_path = os.path.join(project_path, project_name)
 
 # Create The Project
 try:
-    os.mkdir(project_full_path)
+    os.makedirs(project_full_path)
 except OSError as error:
     print(error)
     sys.exit(-1)
