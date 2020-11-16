@@ -10,7 +10,7 @@ from colorama import init, Fore
 init(autoreset=True)
 
 # Get the path to the project
-project_path = input("Enter the Path to your project Destination: ")
+project_path = input(f"{Fore.YELLOW}Enter the Path to your project Destination: ")
 
 if not os.path.isdir(project_path) and os.path.exists(project_path):
     print(f"{Fore.RED}Invalid Path Entered!")
@@ -18,7 +18,7 @@ if not os.path.isdir(project_path) and os.path.exists(project_path):
 
 
 # Get the Project name
-project_name = input("Enter the name for the project: ")
+project_name = input(f"{Fore.YELLOW}Enter the name for the project: ")
 
 project_full_path = os.path.join(project_path, project_name)
 
