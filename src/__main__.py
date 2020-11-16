@@ -84,6 +84,6 @@ if answer == "n":
 
 
 # Execute git commands
-output = os.popen('git init && git add . && git commit -m "initial commit"').read()
+output = os.popen(f'cd {project_full_path} && git init && git add . && git commit -m "initial commit"').read()
 print(f"Output : {output}")
 print(f"{Fore.GREEN}Your project creation is finished.")
