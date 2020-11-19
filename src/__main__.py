@@ -2,6 +2,7 @@ import os
 import sys
 import time
 
+import inquirer
 import requests
 from colorama import Fore, init as colorama_init
 
@@ -96,9 +97,9 @@ def main() -> None:
     create_source(lang, lang_extension, project_full_path)
 
     # Handle GIT
-    answer = input("Do you want to use git? (Y/n): ").lower()[:1]
+    use_git = inquirer.confirm("Do you want to use git?")
 
-    if answer == "n":
+    if not use_git:
         print(f"{Fore.GREEN}The project is created")
         return
 

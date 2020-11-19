@@ -1,5 +1,4 @@
-Project Quickstart
-===================
+# Project Quickstart
 
 This is a small python project that helps you create your projects in no time!
 
@@ -12,6 +11,7 @@ This can
 ## Tech Stack used
 
 - `Requests`: To obtain the gitignore for a certain type, or language.
+- `Colorama`: Use to provide a colorful UI To the Command Line.
 
 ## How to run the project?
 
