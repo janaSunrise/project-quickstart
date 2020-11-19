@@ -1,8 +1,8 @@
 import os
 import sys
-
 from textwrap import dedent
 
+import inquirer
 import requests
 from colorama import Fore, init as colorama_init
 
@@ -10,8 +10,9 @@ from src.languages import Languages
 
 colorama_init(autoreset=True)
 
+
 def get_project_path() -> str:
-    path = input(f"{Fore.YELLOW}Enter the path to your project destination: ")
+    path = inquirer.text(message=f"{Fore.YELLOW}Enter the path to your project destination")
 
     if not os.path.isdir(path) and os.path.exists(path):
         print(f"{Fore.RED}Invalid Path Entered!")
