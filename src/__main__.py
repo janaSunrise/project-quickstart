@@ -5,7 +5,7 @@ import time
 from .languages import languages
 from .utils import get_gitignore
 
-import requests
+import inquirer
 
 from colorama import init, Fore
 
@@ -77,9 +77,8 @@ with open(os.path.join(project_full_path, f"main.{project_lang_extension}"), 'wb
 
 
 # Git installed or not
-answer = input("Is git installed on your system: ")[0]
-
-if answer == "n":
+is_git_installed = inquirer.confirm("Is git installed on your system?", default=False)
+if not is_git_installed:
     print(f"{Fore.GREEN}The project is created")
     sys.exit(0)
 
