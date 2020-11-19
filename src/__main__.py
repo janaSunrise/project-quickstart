@@ -1,9 +1,11 @@
 import os
-from .languages import languages
-
 import sys
-import requests
 import time
+
+from .languages import languages
+from .utils import get_gitignore
+
+import requests
 
 from colorama import init, Fore
 
@@ -44,6 +46,7 @@ print(f"{Fore.GREEN}Initializing readme...")
 
 readme_contents = f"""
 # {project_name}
+
 ### A project using the language {project_language}
 """
 
@@ -56,12 +59,10 @@ time.sleep(1)
 # Create the Gitignore
 print(f"{Fore.GREEN}Creating .gitignore ...")
 
-r = requests.get(f"https://www.toptal.com/developers/gitignore/api/{project_language}")
-
-if r.status_code == 200:
-    gitignore_contents = r.text.strip()
+gitignore = get_gitignore(project_language)
+if not gitignore:
     with open(os.path.join(project_full_path, ".gitignore"), 'wb') as file:
-        file.write(bytes(gitignore_contents.encode()))
+        file.write(bytes(gitignore.encode()))
 else:
     print(f"{Fore.RED}Couldn't initalize gitignore due to Network Error!")
 
@@ -76,7 +77,7 @@ with open(os.path.join(project_full_path, f"main.{project_lang_extension}"), 'wb
 
 
 # Git installed or not
-answer = input("Is git installed on your system: ")[:1]
+answer = input("Is git installed on your system: ")[0]
 
 if answer == "n":
     print(f"{Fore.GREEN}The project is created")
@@ -85,5 +86,6 @@ if answer == "n":
 
 # Execute git commands
 output = os.popen(f'cd {project_full_path} && git init && git add . && git commit -m "initial commit"').read()
+
 print(f"Output : {output}")
 print(f"{Fore.GREEN}Your project creation is finished.")
