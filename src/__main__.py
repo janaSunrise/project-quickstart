@@ -5,7 +5,7 @@ import time
 import requests
 from colorama import Fore, init as colorama_init
 
-from src.languages import languages
+from src.languages import Languages
 
 colorama_init(autoreset=True)
 
@@ -44,8 +44,8 @@ def create_source(lang: str, lang_extension: str, project_path: str) -> None:
     print(f"{Fore.GREEN}Initializing main{lang_extension} ...")
 
     with open(os.path.join(project_path, f"main{lang_extension}"), 'w') as file:
-        if languages.get(lang):
-            file.write(languages[lang])
+        if hasattr(Languages, lang):
+            file.write(getattr(Languages, lang))
         else:
             file.write("")
 

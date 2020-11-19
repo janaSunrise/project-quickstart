@@ -1,406 +1,346 @@
-fsharp = """
-open System
-printfn "Hello, World!"
-"""
+from dataclasses import dataclass
 
-fortran = """
-PRINT *, "Hello World!"
-END
-"""
 
-objective_c = """
-#import <Foundation/Foundation.h>
+@dataclass
+class Languages:
+    fsharp = """
+    open System
+    printfn "Hello, World!"
+    """
 
-int main(int argc, const char * argv[]) {
-    @autoreleasepool {
-        NSLog(@"Hello World!");
+    fortran = """
+    PRINT *, "Hello World!"
+    END
+    """
+
+    objective_c = """
+    #import <Foundation/Foundation.h>
+
+    int main(int argc, const char * argv[]) {
+        @autoreleasepool {
+            NSLog(@"Hello World!");
+        }
+        return 0;
     }
-    return 0;
-}
-"""
+    """
 
-abap = """
-REPORT zhelloworld
-* Write hello world to screen
-WRITE 'Hello World'.
-* Display hello world message.
-MESSAGE 'Hello World' TYPE 'I'.
-"""
+    abap = """
+    REPORT zhelloworld
+    * Write hello world to screen
+    WRITE 'Hello World'.
+    * Display hello world message.
+    MESSAGE 'Hello World' TYPE 'I'.
+    """
 
-assembly = """
-.model small
-.data
-        msg db 10d,13d,"Hello World$"
+    assembly = """
+    .model small
+    .data
+            msg db 10d,13d,"Hello World$"
 
-.code
-        mov ax,@data
-        mov ds,ax
-                                        
-        lea dx,msg                      
-        mov ah,09h                      
-        int 21h                         
+    .code
+            mov ax,@data
+            mov ds,ax
 
-        mov ah,4ch                      
-        int 21h                         
-end
-"""
+            lea dx,msg
+            mov ah,09h
+            int 21h
 
-autoit = """
-MsgBox(0, "Say Hi", "Hello World")
-"""
+            mov ah,4ch
+            int 21h
+    end
+    """
 
-basic = """
-10 PRINT "Hello, World!"
-20 END
-"""
+    autoit = """
+    MsgBox(0, "Say Hi", "Hello World")
+    """
 
-batch = """
-@echo off
+    basic = """
+    10 PRINT "Hello, World!"
+    20 END
+    """
 
-echo Hello World
-"""
+    batch = """
+    @echo off
 
-brainf = "-[------->+<]>-.-[->+++++<]>++.+++++++..+++.[--->+<]>-----.---[->+++<]>.-[--->+<]>---.+++.------.--------."
+    echo Hello World
+    """
 
-c = """
-#include<stdio.h>
+    brainf = """
+    'Hello world'
+    --[>--->->->++>-<<<<<-------]
+    >--.>---------.>--..+++.>----.>+++++++++.<<.+++.------.<-.>>+.
+    """
 
-int main(void)
-{
-  printf("Hello, world!");
-  return 0;
-}
-"""
+    c = """
+    #include<stdio.h>
 
-cool = """
-class Main{
-i : IO <- new IO;
-main() :Int { { i.out_string("Hello World"); 1; } };
-};
-"""
-
-clojurescript = '(println "Hello world!")'
-
-cobol = """
-       IDENTIFICATION DIVISION.
-       PROGRAM-ID. HelloWorld.
-       PROCEDURE DIVISION.
-           DISPLAY "Hello World!".
-       STOP RUN.
-"""
-
-coffeescript = 'alert "Hello, World!"'
-
-cpp = """
-#include <iostream>
-using namespace std;
-
-int main()
-{
-    cout <<"Hello World"<< endl;
-    return 0;
-}
-"""
-
-csharp = """
-using System;
-
-namespace helloWorld
-{
-    class HelloWorld
+    int main(void)
     {
-        static void Main(string[] args)
+    printf("Hello, world!");
+    return 0;
+    }
+    """
+
+    cool = """
+    class Main{
+    i : IO <- new IO;
+    main() :Int { { i.out_string("Hello World"); 1; } };
+    };
+    """
+
+    clojurescript = '(println "Hello world!")'
+
+    cobol = """
+        IDENTIFICATION DIVISION.
+        PROGRAM-ID. HelloWorld.
+        PROCEDURE DIVISION.
+            DISPLAY "Hello World!".
+        STOP RUN.
+    """
+
+    coffeescript = 'alert "Hello, World!"'
+
+    cpp = """
+    #include <iostream>
+    using namespace std;
+
+    int main()
+    {
+        cout <<"Hello World"<< endl;
+        return 0;
+    }
+    """
+
+    csharp = """
+    using System;
+
+    namespace helloWorld
+    {
+        class HelloWorld
         {
-            Console.WriteLine("Hello World!");
+            static void Main(string[] args)
+            {
+                Console.WriteLine("Hello World!");
+            }
         }
     }
-}
-"""
+    """
 
-d = """
-import std.stdio;
+    d = """
+    import std.stdio;
 
-void main()
-{
-    writeln("Hello World");
-}
-"""
+    void main()
+    {
+        writeln("Hello World");
+    }
+    """
 
-dart = """
-void main() {
-    print('hello world');
-}
-"""
+    dart = """
+    void main() {
+        print('hello world');
+    }
+    """
 
-delphi = """
-procedure TForm1.ShowAMessage;
-begin
-  ShowMessage('Hello World!');
-end;
-"""
+    delphi = """
+    procedure TForm1.ShowAMessage;
+    begin
+    ShowMessage('Hello World!');
+    end;
+    """
 
-erlang = """
-% hello world program
--module(helloworld). 
--export([start/0]). 
+    erlang = """
+    % hello world program
+    -module(helloworld).
+    -export([start/0]).
 
-start() -> 
-   io:fwrite("Hello, world!").
-"""
+    start() ->
+    io:fwrite("Hello, world!").
+    """
 
-elixir = """
-IO.puts "Hello World!"
-"""
+    elixir = """
+    IO.puts "Hello World!"
+    """
 
-go = """
-package main
+    go = """
+    package main
 
-import (
-	"fmt"
-)
+    import (
+        "fmt"
+    )
 
-func main() {
-	fmt.Println("Hello World")
-}
-"""
+    func main() {
+        fmt.Println("Hello World")
+    }
+    """
 
-groovy = """
-class HelloWorld {
-   static void main(String[] args) {
-      println('Hello World');
-   }
-}
-"""
+    groovy = """
+    class HelloWorld {
+    static void main(String[] args) {
+        println('Hello World');
+    }
+    }
+    """
 
-haskell = """
-main = putStrLn "Hello, World!"
-"""
+    haskell = """
+    main = putStrLn "Hello, World!"
+    """
 
-html = """
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Hello World!</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-    <h1>Hello World!</h1>
-</body>
-</html>
-"""
+    html = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Hello World!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+    </body>
+    </html>
+    """
 
-intercal = """
-DO ,1 <- #13
-PLEASE DO ,1 SUB #1 <- #238
-DO ,1 SUB #2 <- #108
-DO ,1 SUB #3 <- #112
-DO ,1 SUB #4 <- #0
-DO ,1 SUB #5 <- #64
-DO ,1 SUB #6 <- #194
-DO ,1 SUB #7 <- #48
-PLEASE DO ,1 SUB #8 <- #22
-DO ,1 SUB #9 <- #248
-DO ,1 SUB #10 <- #168
-DO ,1 SUB #11 <- #24
-DO ,1 SUB #12 <- #16
-DO ,1 SUB #13 <- #162
-PLEASE READ OUT ,1
-PLEASE GIVE UP
-"""
+    intercal = """
+    DO ,1 <- #13
+    PLEASE DO ,1 SUB #1 <- #238
+    DO ,1 SUB #2 <- #108
+    DO ,1 SUB #3 <- #112
+    DO ,1 SUB #4 <- #0
+    DO ,1 SUB #5 <- #64
+    DO ,1 SUB #6 <- #194
+    DO ,1 SUB #7 <- #48
+    PLEASE DO ,1 SUB #8 <- #22
+    DO ,1 SUB #9 <- #248
+    DO ,1 SUB #10 <- #168
+    DO ,1 SUB #11 <- #24
+    DO ,1 SUB #12 <- #16
+    DO ,1 SUB #13 <- #162
+    PLEASE READ OUT ,1
+    PLEASE GIVE UP
+    """
 
-java = """
-class HelloWorld
-{
-  public static void main(String[] args)
-  {
-    System.out.println("Hello World!!");
-  }
-}
-"""
+    java = """
+    class HelloWorld
+    {
+    public static void main(String[] args)
+    {
+        System.out.println("Hello World!!");
+    }
+    }
+    """
 
-julia = """
-println("hello world")
-"""
+    julia = """
+    println("hello world")
+    """
 
-juliar = """
-function main() = {
-    printLine("Hello World");
-}
-"""
+    juliar = """
+    function main() = {
+        printLine("Hello World");
+    }
+    """
 
-javascript = """
-console.log("Hello World");
-"""
+    javascript = """
+    console.log("Hello World");
+    """
 
-kotlin = """
-fun main(args : Array<String>) {
+    kotlin = """
+    fun main(args : Array<String>) {
+        println("Hello, World!")
+    }
+    """
+
+    lisp = """
+    (print "Hello World!")
+    """
+
+    lua = """
+    print("Hello World")
+    """
+
+    ocaml = """
+    print_string "Hello world";;
+    """
+
+    nim = """
+    echo "Hello World"
+    """
+
+    pascal = """
+    program Helloworld;
+    begin
+    writeln('hello,world!');
+    end.
+    """
+
+    php = """
+    <?php
+    // In PHP, we use echo to print text
+    echo "Hello World";
+    // If you want to print in browser's console, we use print_r
+    print_r("Hello World");
+    // if you want the variable data types as well use var_dump
+    $stringVar = 'hello world';
+    var_dump($stringVar);
+    ?>
+    """
+
+    perl = """
+    #!/usr/bin/perl
+    print "Hello World";
+    """
+
+    pro = """
+    message('Hello World!')
+    """
+
+    powershell = """
+    Write-Host 'Hello, World'
+    """
+
+    python = """
+    print('Hello World')
+    """
+
+    ruby = """
+    puts 'Hello World'
+    """
+
+    rust = """
+    fn main(){
+    println!("Hello World!")
+    }
+    """
+
+    scala = """
+    object HelloWorld extends App {
     println("Hello, World!")
-}
-"""
+    }
+    """
 
-lisp = """
-(print "Hello World!")
-"""
+    r = """
+    variable <- "Hello World"
+    print (variable)
+    """
 
-lua = """
-print("Hello World")
-"""
+    sh = 'echo "Hello World"'
 
-ocaml = """
-print_string "Hello world";;
-"""
+    sql = """
+    SELECT 'Hello World';
+    PRINT 'Hello World';
+    """
 
-nim = """
-echo "Hello World"
-"""
+    swift = """
+    print("Hello World!")
+    """
 
-pascal = """
-program Helloworld;
-begin
-writeln('hello,world!');
-end.
-"""
+    typescript = """
+    console.log("Hello World!");
+    """
 
-php = """
-<?php
-  // In PHP, we use echo to print text
-  echo "Hello World";
-  // If you want to print in browser's console, we use print_r
-  print_r("Hello World");
-  // if you want the variable data types as well use var_dump
-  $stringVar = 'hello world';
-  var_dump($stringVar);
-?>
-"""
-
-perl = """
-#!/usr/bin/perl
-print "Hello World";
-"""
-
-pro = """
-message('Hello World!')
-"""
-
-powershell = """
-Write-Host 'Hello, World'
-"""
-
-python = """
-print('Hello World')
-"""
-
-ruby = """
-puts 'Hello World'
-"""
-
-rust = """
-fn main(){
-  println!("Hello World!")
-}
-"""
-
-scala = """
-object HelloWorld extends App {
-   println("Hello, World!")
- }
- """
-
-r = """
-variable <- "Hello World"
-print (variable)
-"""
-
-sh = 'echo "Hello World"'
-
-sql = """
-SELECT 'Hello World';
-PRINT 'Hello World';
-"""
-
-swift = """
-print("Hello World!")
-"""
-
-typescript = """
-console.log("Hello World!");
-"""
-
-vb = """
-Module HelloWorld
-   Sub Main( )
-      System.Console.WriteLine("Hello world!")
-   End Sub
-End Module
-"""
-
-languages = {
-    "fsharp": fsharp,
-    "f#": fsharp,
-    "fortran": fortran,
-    "objective-c": objective_c,
-    "objectivec": objective_c,
-    "abap": abap,
-    "assembly": assembly,
-    "autoit": autoit,
-    "basic": basic,
-    "bas": basic,
-    "bat": batch,
-    "batch": batch,
-    "brainfuck": brainf,
-    "brainf": brainf,
-    "c": c,
-    "cool": cool,
-    "cljx": clojurescript,
-    "clojure": clojurescript,
-    "clojurescript": clojurescript,
-    "cobol": cobol,
-    "coffee": coffeescript,
-    "coffeescript": coffeescript,
-    "cs": csharp,
-    "csharp": csharp,
-    "c#": csharp,
-    "d": d,
-    "dart": dart,
-    "delphi": delphi,
-    "erlang": erlang,
-    "elixir": elixir,
-    "go": go,
-    "golang": go,
-    "groovy": groovy,
-    "gvy": groovy,
-    "haskell": haskell,
-    "html": html,
-    "ical": intercal,
-    "intercal": intercal,
-    "java": java,
-    "julia": julia,
-    "juliar": juliar,
-    "js": javascript,
-    "javascript": javascript,
-    "lisp": lisp,
-    "lua": lua,
-    "ocaml": ocaml,
-    "nim": nim,
-    "pascal": pascal,
-    "php": php,
-    "perl": perl,
-    "pro": pro,
-    "powershell": powershell,
-    "py": python,
-    "python": python,
-    "ruby": ruby,
-    "rust": rust,
-    "scala": scala,
-    "r": r,
-    "sh": sh,
-    "bash": sh,
-    "sql": sql,
-    "swift": swift,
-    "ts": typescript,
-    "typescript": typescript,
-    "vb": vb,
-    "visualbasic": vb,
-}
+    vb = """
+    Module HelloWorld
+    Sub Main( )
+        System.Console.WriteLine("Hello world!")
+    End Sub
+    End Module
+    """
