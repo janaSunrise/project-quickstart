@@ -4,6 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+flake8 = "*"
+flake8-annotations = "*"
+flake8-bugbear = "*"
+flake8-import-order = "*"
+ipython = "*"
+pre-commit = "*"
+autopep8 = "*"
 
 [packages]
 requests = "*"
