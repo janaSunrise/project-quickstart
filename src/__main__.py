@@ -2,16 +2,15 @@ import os
 import time
 
 import inquirer
-
 from colorama import Fore, init as colorama_init
 
 from src.utils import (
-    get_project_path,
-    make_project_dirs,
+    create_gitignore,
     create_readme,
     create_source,
-    create_gitignore,
+    get_project_path,
     git_init,
+    make_project_dirs,
 )
 
 colorama_init(autoreset=True)
@@ -20,13 +19,18 @@ colorama_init(autoreset=True)
 def main() -> None:
     # Get project path and ensure it's existence
     project_path = get_project_path()
-    project_name = input(f"{Fore.YELLOW}Enter the name for the project: ")
+    project_name = inquirer.text(message=f"{Fore.YELLOW}Enter the name for the project")
     project_full_path = os.path.join(project_path, project_name)
     make_project_dirs(project_full_path)
 
     # Get project language
-    lang = input(f"{Fore.CYAN}Enter the language to be used for the project: ").lower()
-    lang_extension = input(f"{Fore.CYAN}Enter the extension for {lang}: ").lower()
+    lang = inquirer.text(
+        message=f"{Fore.CYAN}Enter the language to be used for the project"
+    ).lower()
+
+    lang_extension = inquirer.text(
+        message=f"{Fore.CYAN}Enter the extension for {lang}"
+    ).lower()
 
     if not lang_extension.startswith('.'):
         lang_extension = f".{lang_extension}"
