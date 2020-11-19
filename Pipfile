@@ -18,3 +18,5 @@ colorama = "*"
 
 [scripts]
 start = "python -m src"
+lint = "pre-commit run --all-files"
+precommit = "pre-commit install"
