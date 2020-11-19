@@ -2,89 +2,110 @@ import os
 import sys
 import time
 
-from .languages import languages
-from .utils import get_gitignore
-
 import inquirer
+import requests
+from colorama import Fore, init as colorama_init
 
-from colorama import init, Fore
+from src.languages import Languages
 
-init(autoreset=True)
-
-# Get the path to the project
-project_path = input(f"{Fore.YELLOW}Enter the Path to your project Destination: ")
-
-if not os.path.isdir(project_path) and os.path.exists(project_path):
-    print(f"{Fore.RED}Invalid Path Entered!")
-    sys.exit(-1)
+colorama_init(autoreset=True)
 
 
-# Get the Project name
-project_name = input(f"{Fore.YELLOW}Enter the name for the project: ")
+def get_project_path() -> str:
+    path = input(f"{Fore.YELLOW}Enter the path to your project destination: ")
 
-project_full_path = os.path.join(project_path, project_name)
+    if not os.path.isdir(path) and os.path.exists(path):
+        print(f"{Fore.RED}Invalid Path Entered!")
+        sys.exit(-1)
 
-
-# Create The Project
-try:
-    os.makedirs(project_full_path)
-except OSError as error:
-    print(error)
-    sys.exit(-1)
+    return path
 
 
-# Get the data regarding the language being used in project
-project_language = input(f"{Fore.CYAN}Enter the language to be used for the project: ")
-project_lang_extension = input(f"{Fore.CYAN}Enter the extension for {project_language}: ")
-
-if not project_lang_extension.startswith('.'):
-    project_lang_extension = f".{project_lang_extension}"
-
-
-# Create the README.md
-print(f"{Fore.GREEN}Initializing readme...")
-
-readme_contents = f"""
-# {project_name}
-
-### A project using the language {project_language}
-"""
-
-with open(os.path.join(project_full_path, "readme.md"), 'wb') as file:
-    file.write(bytes(readme_contents.encode()))
-
-time.sleep(1)
+def make_project_dirs(project_full_path: str) -> None:
+    try:
+        os.makedirs(project_full_path)
+    except OSError as exc:
+        print(exc)
+        sys.exit(-1)
 
 
-# Create the Gitignore
-print(f"{Fore.GREEN}Creating .gitignore ...")
+def create_readme(project_name: str, lang: str, project_path: str) -> None:
+    print(f"{Fore.GREEN}Initializing readme...")
 
-gitignore = get_gitignore(project_language)
-if not gitignore:
-    with open(os.path.join(project_full_path, ".gitignore"), 'wb') as file:
-        file.write(bytes(gitignore.encode()))
-else:
-    print(f"{Fore.RED}Couldn't initalize gitignore due to Network Error!")
+    readme_contents = f"""
+    # {project_name}
+    ### A project using the language {lang}
+    """
 
-
-# Initialize the source
-print(f"{Fore.GREEN}Initializing main.{project_lang_extension} ...")
-with open(os.path.join(project_full_path, f"main.{project_lang_extension}"), 'wb') as file:
-    if languages[project_language.lower()]:
-        file.write(bytes(languages[project_language.lower()].encode()))
-    else:
-        file.write(bytes("".encode()))
+    with open(os.path.join(project_path, "readme.md"), 'w') as file:
+        file.write(readme_contents)
 
 
-# Git installed or not
-is_git_installed = inquirer.confirm("Is git installed on your system?", default=False)
-if not is_git_installed:
-    print(f"{Fore.GREEN}The project is created")
-    sys.exit(0)
+def create_source(lang: str, lang_extension: str, project_path: str) -> None:
+    print(f"{Fore.GREEN}Initializing main{lang_extension} ...")
+
+    with open(os.path.join(project_path, f"main{lang_extension}"), 'w') as file:
+        if hasattr(Languages, lang):
+            file.write(getattr(Languages, lang))
+        else:
+            file.write("")
 
 
-# Execute git commands
-output = os.popen(f'cd {project_full_path} && git init && git add . && git commit -m "initial commit"').read()
+def create_gitignore(lang: str, project_path: str) -> bool:
+    print(f"{Fore.GREEN}Creating .gitignore ...")
 
-print(f"Output : {output}")
-print(f"{Fore.GREEN}Your project creation is finished.")
+    r = requests.get(f"https://www.toptal.com/developers/gitignore/api/{lang}")
+    if r.status_code != 200:
+        print(f"{Fore.RED}Couldn't initialize gitignore due to Network Error!")
+        return False
+
+    gitignore_contents = r.text.strip()
+
+    with open(os.path.join(project_path, ".gitignore"), 'w') as file:
+        file.write(gitignore_contents)
+
+    return True
+
+
+def git_init(project_path: str) -> None:
+    output = os.popen(
+        f'cd {project_path} && git init && git add . && git commit -m "initial commit"'
+    ).read()
+    print(f"Output: {output}")
+    print(f"{Fore.GREEN}Your project creation is finished.")
+
+
+def main() -> None:
+    # Get project path and ensure it's existence
+    project_path = get_project_path()
+    project_name = input(f"{Fore.YELLOW}Enter the name for the project: ")
+    project_full_path = os.path.join(project_path, project_name)
+    make_project_dirs(project_full_path)
+
+    # Get project language
+    lang = input(f"{Fore.CYAN}Enter the language to be used for the project: ").lower()
+    lang_extension = input(f"{Fore.CYAN}Enter the extension for {lang}: ").lower()
+
+    if not lang_extension.startswith('.'):
+        lang_extension = f".{lang_extension}"
+
+    # Create the README.md
+    create_readme(project_name, lang, project_full_path)
+    time.sleep(1)
+
+    # Initialize the source
+    create_source(lang, lang_extension, project_full_path)
+
+    # Handle GIT
+    use_git = inquirer.confirm("Do you want to use git?")
+
+    if not use_git:
+        print(f"{Fore.GREEN}The project is created")
+        return
+
+    create_gitignore(lang, project_full_path)
+    git_init(project_full_path)
+
+
+if __name__ == "__main__":
+    main()

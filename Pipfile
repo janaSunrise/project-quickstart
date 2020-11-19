@@ -4,11 +4,20 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+flake8 = "~=3.8.4"
+flake8-annotations = "~=2.4.1"
+flake8-bugbear = "~=20.1.4"
+flake8-import-order = "~=0.18.1"
+ipython = "~=7.19.0"
+pre-commit = "~=2.8.2"
+autopep8 = "~=1.5.4"
 
 [packages]
-requests = "*"
-colorama = "*"
-inquirer = "*"
+requests = "~=2.25.0"
+colorama = "~=0.4.4"
+inquirer = "~=2.7.0"
 
 [scripts]
 start = "python -m src"
+lint = "pre-commit run --all-files"
+precommit = "pre-commit install"

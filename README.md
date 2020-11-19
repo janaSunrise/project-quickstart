@@ -1,5 +1,4 @@
-Project Quickstart
-===================
+# Project Quickstart
 
 This is a small python project that helps you create your projects in no time!
 
