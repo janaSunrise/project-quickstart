@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 requests = "*"
 colorama = "*"
+inquirer = "*"
 
 [scripts]
 start = "python -m src"
