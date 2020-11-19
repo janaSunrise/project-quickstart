@@ -1,13 +1,13 @@
 import os
-from .languages import languages
-
 import sys
-import requests
 import time
 
-from colorama import init, Fore
+import requests
+from colorama import Fore, init as colorama_init
 
-init(autoreset=True)
+from src.languages import languages
+
+colorama_init(autoreset=True)
 
 # Get the path to the project
 project_path = input(f"{Fore.YELLOW}Enter the Path to your project Destination: ")
@@ -63,7 +63,7 @@ if r.status_code == 200:
     with open(os.path.join(project_full_path, ".gitignore"), 'wb') as file:
         file.write(bytes(gitignore_contents.encode()))
 else:
-    print(f"{Fore.RED}Couldn't initalize gitignore due to Network Error!")
+    print(f"{Fore.RED}Couldn't initialize gitignore due to Network Error!")
 
 
 # Initialize the source
@@ -84,6 +84,8 @@ if answer == "n":
 
 
 # Execute git commands
-output = os.popen(f'cd {project_full_path} && git init && git add . && git commit -m "initial commit"').read()
+output = os.popen(
+    f'cd {project_full_path} && git init && git add . && git commit -m "initial commit"'
+).read()
 print(f"Output : {output}")
 print(f"{Fore.GREEN}Your project creation is finished.")
