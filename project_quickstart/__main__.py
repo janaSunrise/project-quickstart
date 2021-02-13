@@ -5,6 +5,7 @@ import time
 import inquirer
 from click import Path, argument, group, option
 from colorama import Fore, init as colorama_init
+from git import Repo, exc
 
 from project_quickstart.utils import (
     create_gitignore,
@@ -14,8 +15,9 @@ from project_quickstart.utils import (
     get_project_path,
     git_init,
     make_project_dirs,
+    remove_git_init
 )
-from project_quickstart.config import CONTEXT_SETTINGS
+from project_quickstart.config import CACHE_DIR, CONTEXT_SETTINGS, GIT_URL_REGEX
 
 colorama_init(autoreset=True)
 
@@ -89,6 +91,29 @@ def init(license, use_git):
 @main.command()
 @argument("repository")
 @argument("location", type=Path(exists=True))
-def template(repository, location):
+@option("-c", "--cache", is_flag=True, help="If you need to cache the repo.")
+def template(repository, location, cache):
     """Initialize the project with a template from a git repository into a specific location."""
-    print("working")
+    git_url_check = GIT_URL_REGEX.match(repository)
+
+    home = os.path.expanduser("~")
+    cache_path = os.path.join(home, CACHE_DIR)
+
+    if location == ".":
+        location = git_url_check.group("repository")
+
+    if not git_url_check:
+        print(f"{Fore.RED} The URL for the repository is invalid!")
+        return
+
+    try:
+        Repo.clone_from(repository, location)
+        remove_git_init(location)
+        if cache:
+            Repo.clone_from(repository, cache_path)
+    except exc.GitError as e:
+        print(f"{Fore.RED} ERROR: {e!r}")
+    except exc.GitCommandError as e:
+        print(f"{Fore.RED} ERROR: {e!r}")
+
+    print(f"{Fore.GREEN}Your template creation is finished.")

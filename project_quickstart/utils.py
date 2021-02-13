@@ -1,11 +1,13 @@
 # -- Imports --
 import os
+import shutil
 import sys
 from textwrap import dedent
 
 import inquirer
 import requests
 from colorama import Fore, init as colorama_init
+from git import Repo, exc
 
 from project_quickstart.languages import Languages
 
@@ -102,6 +104,17 @@ def create_license(name: str, project_path: str) -> bool:
 
 
 def git_init(project_path: str) -> None:
-    output = os.popen(f'cd {project_path} && git init && git add . && git commit -m "initial commit"').read()
-    print(f"Output: {output}")
+    try:
+        Repo.init(project_path)
+    except exc.GitError as e:
+        print(f"{Fore.RED} ERROR: {e!r}")
+    except exc.GitCommandError as e:
+        print(f"{Fore.RED} ERROR: {e!r}")
     print(f"{Fore.GREEN}Your project creation is finished.")
+
+
+def remove_git_init(path: str) -> None:
+    if not os.path.isdir(path) and os.path.exists(path):
+        return
+
+    shutil.rmtree(os.path.join(path, ".git"))

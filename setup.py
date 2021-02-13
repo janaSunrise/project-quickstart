@@ -51,7 +51,8 @@ setuptools.setup(
         "requests==2.25.0",
         "colorama==0.4.4",
         "inquirer ==2.7.0",
-        "click==7.1.2"
+        "click==7.1.2",
+        "gitpython==3.1.13"
     ],
 
     classifiers=[
@@ -61,8 +62,6 @@ setuptools.setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
 
-        "Development Status :: 2 - Pre-Alpha",
-
         "Programming Language :: Python :: Implementation :: CPython",
 
         "License :: OSI Approved :: MIT License",
@@ -71,8 +70,6 @@ setuptools.setup(
 
         "Intended Audience :: Developers",
         "Intended Audience :: Science/Research",
-
-        "Topic :: Scientific/Engineering :: Mathematics",
 
         "Natural Language :: English",
     ],
