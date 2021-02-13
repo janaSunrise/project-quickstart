@@ -42,6 +42,11 @@ setuptools.setup(
     packages=setuptools.find_packages(
         exclude=["tests", "tests.*", "tools", "tools.*"]
     ),
+    entry_points={
+        'console_scripts': [
+            'project-quickstart = project_quickstart.__main__:main'
+        ]
+    },
     install_requires=[
         "requests==2.25.0",
         "colorama==0.4.4",
@@ -59,8 +64,7 @@ setuptools.setup(
 
         "Programming Language :: Python :: Implementation :: CPython",
 
-
-        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+        "License :: OSI Approved :: MIT License",
 
         "Operating System :: OS Independent",
 
