@@ -3,7 +3,7 @@ import os
 import time
 
 import inquirer
-from click import group, option
+from click import Path, argument, group, option
 from colorama import Fore, init as colorama_init
 
 from project_quickstart.utils import (
@@ -15,10 +15,9 @@ from project_quickstart.utils import (
     git_init,
     make_project_dirs,
 )
+from project_quickstart.config import CONTEXT_SETTINGS
 
 colorama_init(autoreset=True)
-
-CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
 @group(context_settings=CONTEXT_SETTINGS)
@@ -85,3 +84,11 @@ def init(license, use_git):
     # -- Do the git file processing
     create_gitignore(lang, project_full_path)
     git_init(project_full_path)
+
+
+@main.command()
+@argument("repository")
+@argument("location", type=Path(exists=True))
+def template(repository, location):
+    """Initialize the project with a template from a git repository into a specific location."""
+    print("working")
