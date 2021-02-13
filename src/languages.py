@@ -1,17 +1,18 @@
 from dataclasses import dataclass
+from textwrap import dedent
 
 
 @dataclass
 class Languages:
-    fsharp = """
+    fsharp = dedent("""
     open System
     printfn "Hello, World!"
-    """
+    """)
 
-    fortran = """
+    fortran = dedent("""
     PRINT *, "Hello World!"
     END
-    """
+    """)
 
     objective_c = """
     #import <Foundation/Foundation.h>
@@ -24,15 +25,15 @@ class Languages:
     }
     """
 
-    abap = """
+    abap = dedent("""
     REPORT zhelloworld
     * Write hello world to screen
     WRITE 'Hello World'.
     * Display hello world message.
     MESSAGE 'Hello World' TYPE 'I'.
-    """
+    """)
 
-    assembly = """
+    assembly = dedent("""
     .model small
     .data
             msg db 10d,13d,"Hello World$"
@@ -48,30 +49,30 @@ class Languages:
             mov ah,4ch
             int 21h
     end
-    """
+    """)
 
-    autoit = """
+    autoit = dedent("""
     MsgBox(0, "Say Hi", "Hello World")
-    """
+    """)
 
-    basic = """
+    basic = dedent("""
     10 PRINT "Hello, World!"
     20 END
-    """
+    """)
 
-    batch = """
+    batch = dedent("""
     @echo off
 
     echo Hello World
-    """
+    """)
 
-    brainf = """
+    brainf = dedent("""
     'Hello world'
     --[>--->->->++>-<<<<<-------]
     >--.>---------.>--..+++.>----.>+++++++++.<<.+++.------.<-.>>+.
-    """
+    """)
 
-    c = """
+    c = dedent("""
     #include<stdio.h>
 
     int main(void)
@@ -79,28 +80,28 @@ class Languages:
     printf("Hello, world!");
     return 0;
     }
-    """
+    """)
 
-    cool = """
+    cool = dedent("""
     class Main{
     i : IO <- new IO;
     main() :Int { { i.out_string("Hello World"); 1; } };
     };
-    """
+    """)
 
     clojurescript = '(println "Hello world!")'
 
-    cobol = """
+    cobol = dedent("""
         IDENTIFICATION DIVISION.
         PROGRAM-ID. HelloWorld.
         PROCEDURE DIVISION.
             DISPLAY "Hello World!".
         STOP RUN.
-    """
+    """)
 
     coffeescript = 'alert "Hello, World!"'
 
-    cpp = """
+    cpp = dedent("""
     #include <iostream>
     using namespace std;
 
@@ -109,9 +110,9 @@ class Languages:
         cout <<"Hello World"<< endl;
         return 0;
     }
-    """
+    """)
 
-    csharp = """
+    csharp = dedent("""
     using System;
 
     namespace helloWorld
@@ -124,44 +125,44 @@ class Languages:
             }
         }
     }
-    """
+    """)
 
-    d = """
+    d = dedent("""
     import std.stdio;
 
     void main()
     {
         writeln("Hello World");
     }
-    """
+    """)
 
-    dart = """
+    dart = dedent("""
     void main() {
         print('hello world');
     }
-    """
+    """)
 
-    delphi = """
+    delphi = dedent("""
     procedure TForm1.ShowAMessage;
     begin
     ShowMessage('Hello World!');
     end;
-    """
+    """)
 
-    erlang = """
+    erlang = dedent("""
     % hello world program
     -module(helloworld).
     -export([start/0]).
 
     start() ->
     io:fwrite("Hello, world!").
-    """
+    """)
 
-    elixir = """
+    elixir = dedent("""
     IO.puts "Hello World!"
-    """
+    """)
 
-    go = """
+    go = dedent("""
     package main
 
     import (
@@ -171,21 +172,21 @@ class Languages:
     func main() {
         fmt.Println("Hello World")
     }
-    """
+    """)
 
-    groovy = """
+    groovy = dedent("""
     class HelloWorld {
     static void main(String[] args) {
         println('Hello World');
     }
     }
-    """
+    """)
 
-    haskell = """
+    haskell = dedent("""
     main = putStrLn "Hello, World!"
-    """
+    """)
 
-    html = """
+    html = dedent("""
     <!DOCTYPE html>
     <html>
     <head>
@@ -198,9 +199,9 @@ class Languages:
         <h1>Hello World!</h1>
     </body>
     </html>
-    """
+    """)
 
-    intercal = """
+    intercal = dedent("""
     DO ,1 <- #13
     PLEASE DO ,1 SUB #1 <- #238
     DO ,1 SUB #2 <- #108
@@ -217,9 +218,9 @@ class Languages:
     DO ,1 SUB #13 <- #162
     PLEASE READ OUT ,1
     PLEASE GIVE UP
-    """
+    """)
 
-    java = """
+    java = dedent("""
     class HelloWorld
     {
     public static void main(String[] args)
@@ -227,52 +228,52 @@ class Languages:
         System.out.println("Hello World!!");
     }
     }
-    """
+    """)
 
-    julia = """
+    julia = dedent("""
     println("hello world")
-    """
+    """)
 
-    juliar = """
+    juliar = dedent("""
     function main() = {
         printLine("Hello World");
     }
-    """
+    """)
 
-    javascript = """
+    javascript = dedent("""
     console.log("Hello World");
-    """
+    """)
 
-    kotlin = """
+    kotlin = dedent("""
     fun main(args : Array<String>) {
         println("Hello, World!")
     }
-    """
+    """)
 
-    lisp = """
+    lisp = dedent("""
     (print "Hello World!")
-    """
+    """)
 
-    lua = """
+    lua = dedent("""
     print("Hello World")
-    """
+    """)
 
-    ocaml = """
+    ocaml = dedent("""
     print_string "Hello world";;
-    """
+    """)
 
-    nim = """
+    nim = dedent("""
     echo "Hello World"
-    """
+    """)
 
-    pascal = """
+    pascal = dedent("""
     program Helloworld;
     begin
     writeln('hello,world!');
     end.
-    """
+    """)
 
-    php = """
+    php = dedent("""
     <?php
     // In PHP, we use echo to print text
     echo "Hello World";
@@ -282,65 +283,65 @@ class Languages:
     $stringVar = 'hello world';
     var_dump($stringVar);
     ?>
-    """
+    """)
 
-    perl = """
+    perl = dedent("""
     #!/usr/bin/perl
     print "Hello World";
-    """
+    """)
 
-    pro = """
+    pro = dedent("""
     message('Hello World!')
-    """
+    """)
 
-    powershell = """
+    powershell = dedent("""
     Write-Host 'Hello, World'
-    """
+    """)
 
-    python = """
+    python = dedent("""
     print('Hello World')
-    """
+    """)
 
-    ruby = """
+    ruby = dedent("""
     puts 'Hello World'
-    """
+    """)
 
-    rust = """
+    rust = dedent("""
     fn main(){
     println!("Hello World!")
     }
-    """
+    """)
 
-    scala = """
+    scala = dedent("""
     object HelloWorld extends App {
     println("Hello, World!")
     }
-    """
+    """)
 
-    r = """
+    r = dedent("""
     variable <- "Hello World"
     print (variable)
-    """
+    """)
 
     sh = 'echo "Hello World"'
 
-    sql = """
+    sql = dedent("""
     SELECT 'Hello World';
     PRINT 'Hello World';
-    """
+    """)
 
-    swift = """
+    swift = dedent("""
     print("Hello World!")
-    """
+    """)
 
-    typescript = """
+    typescript = dedent("""
     console.log("Hello World!");
-    """
+    """)
 
-    vb = """
+    vb = dedent("""
     Module HelloWorld
     Sub Main( )
         System.Console.WriteLine("Hello world!")
     End Sub
     End Module
-    """
+    """)
