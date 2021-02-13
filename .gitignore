@@ -30,3 +30,6 @@ TODO
 # Build and package files
 build/
 ProjectQuickstart.egg-info/
+
+# Compiled files
+*.pyc
