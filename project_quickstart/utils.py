@@ -7,7 +7,7 @@ import inquirer
 import requests
 from colorama import Fore, init as colorama_init
 
-from src.languages import Languages
+from project_quickstart.languages import Languages
 
 colorama_init(autoreset=True)
 

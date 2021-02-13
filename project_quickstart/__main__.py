@@ -4,7 +4,7 @@ import time
 import inquirer
 from colorama import Fore, init as colorama_init
 
-from src.utils import (
+from project_quickstart.utils import (
     create_gitignore,
     create_license,
     create_readme,
