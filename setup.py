@@ -50,7 +50,8 @@ setuptools.setup(
     install_requires=[
         "requests==2.25.0",
         "colorama==0.4.4",
-        "inquirer ==2.7.0"
+        "inquirer ==2.7.0",
+        "click==7.1.2"
     ],
 
     classifiers=[

@@ -1,5 +1,5 @@
 __author__ = "Sunrit Jana"
 __email__ = "warriordefenderz@gmail.com"
-__version__ = "0.1.0-alpha"
+__version__ = "0.1.0"
 __license__ = "MIT License"
 __copyright__ = "Copyright 2020 Sunrit Jana"

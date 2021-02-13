@@ -26,3 +26,7 @@ venv/
 
 # Personal TODO files
 TODO
+
+# Build and package files
+build/
+ProjectQuickstart.egg-info/
