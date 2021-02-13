@@ -95,6 +95,8 @@ def create_license(name: str, project_path: str) -> bool:
     req = requests.get(license_url)
     license_contents = req.json()["body"]
 
+    print(f"{Fore.GREEN}Initializing LICENSE [{name}]")
+
     with open(os.path.join(project_path, "LICENSE"), 'w') as file:
         file.write(license_contents)
 

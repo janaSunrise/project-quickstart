@@ -31,10 +31,10 @@ def main() -> None:
 
 
 @main.command()
-@option("-l", "--license", is_flag=False, help="Get a license from the library added to your project.")
-def init(license):
+@option("-l", "--license", is_flag=True, help="Get a license from the library added to your project.")
+@option("-g", "--git", is_flag=True, help="Adding the project to git for quick deploying and getting started with repo")
+def init(license, use_git):
     """Get started with your ideas without spending any time on creating the projects."""
-    # -- Get the project location --
     project_path = get_project_path()
     project_name = inquirer.text(message=f"{Fore.YELLOW}Enter the name for the project")
 
@@ -78,8 +78,6 @@ def init(license):
     create_source(lang, lang_extension, project_full_path)
 
     # -- Handle GIT --
-    use_git = inquirer.confirm("Do you want to use git?")
-
     if not use_git:
         print(f"{Fore.GREEN}The project is created")
         return
