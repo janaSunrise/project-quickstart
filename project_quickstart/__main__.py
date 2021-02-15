@@ -21,7 +21,7 @@ from project_quickstart.utils import (
     make_project_dirs,
     remove_git_init
 )
-from project_quickstart.config import CACHE_DIR, CONTEXT_SETTINGS, GIT_URL_REGEX
+from project_quickstart.config import console, CACHE_DIR, CONTEXT_SETTINGS, GIT_URL_REGEX
 
 # -- Config --
 colorama_init(autoreset=True)
@@ -118,12 +118,12 @@ def init(license: bool, git: bool) -> None:
         Project path: {project_full_path}
 
         Language: {lang}
-        
+
         ✓ Source files
         ✓ Readme
         {"✗" if not license else "✓"} License
         {"✗" if not git else "✓"} Initialized git and gitignore.
-        
+
         Have an awesome day!
         """), style="bold cyan")
     )
@@ -149,10 +149,21 @@ def template(repository, location, cache) -> None:
         return
 
     try:
-        Repo.clone_from(repository, location)
-        remove_git_init(location)
+        with console.status(f"{Style.BRIGHT}{Fore.YELLOW}Cloning the repo...", spinner="dots"):
+            Repo.clone_from(repository, location)
+
+        print(f"{Style.BRIGHT}{Fore.GREEN}Cloned the repo.")
+
+        with console.status(f"{Style.BRIGHT}{Fore.YELLOW}Finalizing the project...", spinner="dots"):
+            remove_git_init(location)
+
+        print(f"{Style.BRIGHT}{Fore.GREEN}Removed git config.")
+
         if cache:
-            Repo.clone_from(repository, cache_path)
+            with console.status(f"{Style.BRIGHT}{Fore.YELLOW}Caching the template..", spinner="dots"):
+                Repo.clone_from(repository, cache_path)
+
+            print(f"{Style.BRIGHT}{Fore.GREEN}Successfully cached the repo.")
     except exc.GitError as e:
         print(f"{Style.BRIGHT}{Fore.RED} ERROR: {e!r}")
     except exc.GitCommandError as e:
@@ -167,7 +178,7 @@ def template(repository, location, cache) -> None:
             Template location: {location}
 
             ✓ Template downloaded
-            {"✗" if not cache else "✓"} Cached [{cache_path + git_url_check.group("repository")}]
+            {"✗" if not cache else "✓"} Cached ({cache_path + git_url_check.group("repository")})
 
             Have an awesome day!
             """), style="bold cyan")
