@@ -34,7 +34,7 @@ def main() -> None:
 @main.command()
 @option("-l", "--license", is_flag=True, help="Get a license from the library added to your project.")
 @option("-g", "--git", is_flag=True, help="Adding the project to git for quick deploying and getting started with repo")
-def init(license, use_git):
+def init(license, git):
     """Get started with your ideas without spending any time on creating the projects."""
     project_path = get_project_path()
     project_name = inquirer.text(message=f"{Fore.YELLOW}Enter the name for the project")
@@ -79,7 +79,7 @@ def init(license, use_git):
     create_source(lang, lang_extension, project_full_path)
 
     # -- Handle GIT --
-    if not use_git:
+    if not git:
         print(f"{Fore.GREEN}The project is created")
         return
 
