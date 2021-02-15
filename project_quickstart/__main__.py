@@ -178,7 +178,7 @@ def template(repository, location, cache) -> None:
             Template location: {location}
 
             ✓ Template downloaded
-            {"✗" if not cache else "✓"} Cached ({cache_path + git_url_check.group("repository")})
+            {"✗" if not cache else "✓"} Cached ({cache_path + "/" + git_url_check.group("repository")})
 
             Have an awesome day!
             """), style="bold cyan")
