@@ -2,6 +2,7 @@
 import os
 import shutil
 import sys
+import time
 from textwrap import dedent
 
 import inquirer
@@ -9,6 +10,7 @@ import requests
 from colorama import Fore, init as colorama_init
 from git import Repo, exc
 
+from project_quickstart.config import console
 from project_quickstart.languages import Languages
 
 colorama_init(autoreset=True)
@@ -34,42 +36,48 @@ def make_project_dirs(project_full_path: str) -> None:
 
 
 def create_readme(project_name: str, lang: str, project_path: str) -> None:
-    print(f"{Fore.GREEN}Initializing readme...")
-
     readme_contents = dedent(f"""
     # {project_name}
     ### A project using the language {lang}
-    """)
+    """).strip()
 
-    with open(os.path.join(project_path, "README.md"), 'w') as file:
-        file.write(readme_contents)
+    with console.status(f"{Fore.YELLOW}Initializing readme...", spinner="dots"):
+        time.sleep(1)
+        with open(os.path.join(project_path, "README.md"), 'w') as file:
+            file.write(readme_contents)
+
+    print(f"{Fore.GREEN}Initialized Readme.")
 
 
 def create_source(lang: str, lang_extension: str, project_path: str) -> None:
-    print(f"{Fore.GREEN}Initializing main{lang_extension} ...")
+    with console.status(f"{Fore.YELLOW}Initializing main{lang_extension}...", spinner="dots"):
+        time.sleep(1)
+        with open(os.path.join(project_path, f"main{lang_extension}"), 'w') as file:
+            if hasattr(Languages, lang):
+                file.write(getattr(Languages, lang))
+            else:
+                file.write("")
 
-    with open(os.path.join(project_path, f"main{lang_extension}"), 'w') as file:
-        if hasattr(Languages, lang):
-            file.write(getattr(Languages, lang))
-        else:
-            file.write("")
+    print(f"{Fore.GREEN}Initialized main{lang_extension}.")
 
 
 def create_gitignore(lang: str, project_path: str) -> bool:
-    print(f"{Fore.GREEN}Creating .gitignore ...")
+    with console.status(f"{Fore.YELLOW}Creating .gitignore ...", spinner="dots"):
+        time.sleep(1)
 
-    r = requests.get(f"https://www.toptal.com/developers/gitignore/api/{lang}")
+        req = requests.get(f"https://www.toptal.com/developers/gitignore/api/{lang}")
 
-    if r.status_code != 200:
-        print(f"{Fore.RED}Couldn't initialize gitignore due to Network Error!")
-        return False
+        if req.status_code != 200:
+            print(f"{Fore.RED}Couldn't initialize gitignore due to Network Error!")
+            return False
 
-    gitignore_contents = r.text.strip()
+        gitignore_contents = req.text.strip()
 
-    with open(os.path.join(project_path, ".gitignore"), 'w') as file:
-        file.write(gitignore_contents)
+        with open(os.path.join(project_path, ".gitignore"), 'w') as file:
+            file.write(gitignore_contents)
 
-    return True
+        print(f"{Fore.GREEN}Initialized gitignore.")
+        return True
 
 
 def create_license(name: str, project_path: str) -> bool:
@@ -86,30 +94,37 @@ def create_license(name: str, project_path: str) -> bool:
         "The Unlicense": 12
     }
 
-    req = requests.get(f"https://api.github.com/licenses")
+    with console.status(f"{Fore.YELLOW}Creating license...", spinner="dots"):
+        time.sleep(1)
 
-    if req.status_code != 200:
-        print(f"{Fore.RED}Couldn't initialize gitignore due to Network Error!")
-        return False
+        req = requests.get(f"https://api.github.com/licenses")
 
-    license_url = req.json()[mapping[name]]["url"]
+        if req.status_code != 200:
+            print(f"{Fore.RED}Couldn't initialize gitignore due to Network Error!")
+            return False
 
-    req = requests.get(license_url)
-    license_contents = req.json()["body"]
+        license_url = req.json()[mapping[name]]["url"]
 
-    print(f"{Fore.GREEN}Initializing LICENSE [{name}]")
+        req = requests.get(license_url)
+        license_contents = req.json()["body"]
 
-    with open(os.path.join(project_path, "LICENSE"), 'w') as file:
-        file.write(license_contents)
+        with console.status(f"{Fore.YELLOW}Initializing License[{name}]", spinner="dots"):
+            time.sleep(1)
+            with open(os.path.join(project_path, "LICENSE"), 'w') as file:
+                file.write(license_contents)
+
+    print(f"{Fore.GREEN}Initialized license [{name}].")
 
 
 def git_init(project_path: str) -> None:
-    try:
-        Repo.init(project_path)
-    except exc.GitError as e:
-        print(f"{Fore.RED} ERROR: {e!r}")
-    except exc.GitCommandError as e:
-        print(f"{Fore.RED} ERROR: {e!r}")
+    with console.status(f"{Fore.GREEN}Finalizing the project...", spinner="dots"):
+        try:
+            Repo.init(project_path)
+        except exc.GitError as e:
+            print(f"{Fore.RED} ERROR: {e!r}")
+        except exc.GitCommandError as e:
+            print(f"{Fore.RED} ERROR: {e!r}")
+
     print(f"{Fore.GREEN}Your project creation is finished.")
 
 

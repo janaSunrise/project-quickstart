@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 import os
 import time
+from textwrap import dedent
 
 import inquirer
 from click import Path, argument, group, option
-from colorama import Fore, init as colorama_init
+from colorama import Fore, Style, init as colorama_init
 from git import Repo, exc
+from rich import print as rprint
+from rich.console import RenderGroup
+from rich.panel import Panel
 
 from project_quickstart.utils import (
     create_gitignore,
@@ -19,6 +23,7 @@ from project_quickstart.utils import (
 )
 from project_quickstart.config import CACHE_DIR, CONTEXT_SETTINGS, GIT_URL_REGEX
 
+# -- Config --
 colorama_init(autoreset=True)
 
 
@@ -34,18 +39,18 @@ def main() -> None:
 @main.command()
 @option("-l", "--license", is_flag=True, help="Get a license from the library added to your project.")
 @option("-g", "--git", is_flag=True, help="Adding the project to git for quick deploying and getting started with repo")
-def init(license, git):
+def init(license: bool, git: bool) -> None:
     """Get started with your ideas without spending any time on creating the projects."""
     project_path = get_project_path()
-    project_name = inquirer.text(message=f"{Fore.YELLOW}Enter the name for the project")
+    project_name = inquirer.text(message=f"{Style.BRIGHT}{Fore.YELLOW}Enter the name for the project")
 
     # -- Create the project folders --
     project_full_path = os.path.join(project_path, project_name)
     make_project_dirs(project_full_path)
 
     # -- Get project language --
-    lang = inquirer.text(message=f"{Fore.CYAN}Enter the language to be used for the project").lower()
-    lang_extension = inquirer.text(message=f"{Fore.CYAN}Enter the extension for {lang}").lower()
+    lang = inquirer.text(message=f"{Style.BRIGHT}{Fore.CYAN}Enter the language to be used for the project").lower()
+    lang_extension = inquirer.text(message=f"{Style.BRIGHT}{Fore.CYAN}Enter the extension for {lang}").lower()
 
     if not lang_extension.startswith('.'):
         lang_extension = f".{lang_extension}"
@@ -57,7 +62,7 @@ def init(license, git):
     # -- Create License --
     if license:
         license_choice = inquirer.list_input(
-            "Which license do you want to use for your project?",
+            f"{Style.BRIGHT}{Fore.GREEN}Which license do you want to use for your project?",
             choices=[
                 "GNU Affero General Public License v3.0",
                 "Apache License 2.0",
@@ -80,19 +85,56 @@ def init(license, git):
 
     # -- Handle GIT --
     if not git:
-        print(f"{Fore.GREEN}The project is created")
+        print(f"{Style.BRIGHT}{Fore.GREEN}The project is created")
+
+        panel_group = RenderGroup(
+            Panel("Summary", style="bold cyan"),
+            Panel(dedent(f"""
+                Project name: {project_name}
+                Project path: {project_full_path}
+
+                Language: {lang}
+
+                ✓ Source files
+                ✓ Readme
+                {"✗" if not license else "✓"} License
+                {"✗" if not git else "✓"} Initialized git and gitignore.
+
+                Have an awesome day!
+                """), style="bold cyan")
+        )
+        rprint(Panel(panel_group))
+
         return
 
     # -- Do the git file processing
     create_gitignore(lang, project_full_path)
     git_init(project_full_path)
 
+    panel_group = RenderGroup(
+        Panel("Summary", style="bold cyan"),
+        Panel(dedent(f"""
+        Project name: {project_name}
+        Project path: {project_full_path}
+
+        Language: {lang}
+        
+        ✓ Source files
+        ✓ Readme
+        {"✗" if not license else "✓"} License
+        {"✗" if not git else "✓"} Initialized git and gitignore.
+        
+        Have an awesome day!
+        """), style="bold cyan")
+    )
+    rprint(Panel(panel_group))
+
 
 @main.command()
 @argument("repository")
 @argument("location", type=Path(exists=True))
 @option("-c", "--cache", is_flag=True, help="If you need to cache the repo.")
-def template(repository, location, cache):
+def template(repository, location, cache) -> None:
     """Initialize the project with a template from a git repository into a specific location."""
     git_url_check = GIT_URL_REGEX.match(repository)
 
@@ -100,10 +142,10 @@ def template(repository, location, cache):
     cache_path = os.path.join(home, CACHE_DIR)
 
     if location == ".":
-        location = git_url_check.group("repository")
+        location = "./" + git_url_check.group("repository")
 
     if not git_url_check:
-        print(f"{Fore.RED} The URL for the repository is invalid!")
+        print(f"{Style.BRIGHT}{Fore.RED}The URL for the repository is invalid!")
         return
 
     try:
@@ -112,8 +154,22 @@ def template(repository, location, cache):
         if cache:
             Repo.clone_from(repository, cache_path)
     except exc.GitError as e:
-        print(f"{Fore.RED} ERROR: {e!r}")
+        print(f"{Style.BRIGHT}{Fore.RED} ERROR: {e!r}")
     except exc.GitCommandError as e:
-        print(f"{Fore.RED} ERROR: {e!r}")
+        print(f"{Style.BRIGHT}{Fore.RED} ERROR: {e!r}")
 
-    print(f"{Fore.GREEN}Your template creation is finished.")
+    print(f"{Style.BRIGHT}{Fore.GREEN}Your template creation is finished.")
+
+    panel_group = RenderGroup(
+        Panel("Summary", style="bold cyan"),
+        Panel(dedent(f"""
+            Repository: {repository}
+            Template location: {location}
+
+            ✓ Template downloaded
+            {"✗" if not cache else "✓"} Cached [{cache_path + git_url_check.group("repository")}]
+
+            Have an awesome day!
+            """), style="bold cyan")
+    )
+    rprint(Panel(panel_group))
