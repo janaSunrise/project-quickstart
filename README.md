@@ -9,7 +9,7 @@ This can
 - Clone and use a repo as template
 - Perform caching.
 
-
+https://github.com/bee-san
 ## Tech Stack used
 
 - `Requests`: To perform several web requests.
@@ -18,6 +18,12 @@ This can
 - `Click`: Used to design CLI programs.
 
 ## How to run and use the project?
+
+### Running normally
+
+You can run it normally by using `python -m project_quickstart`
+
+### Run by installing from pip
 
 You can use `pip install ProjectQuickstart` to install it from PyPI.
 

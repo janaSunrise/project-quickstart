@@ -184,3 +184,7 @@ def template(repository, location, cache) -> None:
             """), style="bold cyan")
     )
     rprint(Panel(panel_group))
+
+
+if __name__ == "__main__":
+    main()
