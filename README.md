@@ -9,7 +9,6 @@ This can
 - Clone and use a repo as template
 - Perform caching.
 
-https://github.com/bee-san
 ## Tech Stack used
 
 - `Requests`: To perform several web requests.
