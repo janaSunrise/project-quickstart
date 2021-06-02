@@ -11,7 +11,8 @@ from rich import print as rprint
 from rich.console import RenderGroup
 from rich.panel import Panel
 
-from project_quickstart.utils import (
+from .config import CACHE_DIR, CONTEXT_SETTINGS, GIT_URL_REGEX, console
+from .utils import (
     create_gitignore,
     create_license,
     create_readme,
@@ -21,7 +22,6 @@ from project_quickstart.utils import (
     make_project_dirs,
     remove_git_init
 )
-from project_quickstart.config import console, CACHE_DIR, CONTEXT_SETTINGS, GIT_URL_REGEX
 
 # -- Config --
 colorama_init(autoreset=True)
@@ -134,7 +134,7 @@ def init(license: bool, git: bool) -> None:
 @argument("repository")
 @argument("location", type=Path(exists=True))
 @option("-c", "--cache", is_flag=True, help="If you need to cache the repo.")
-def template(repository, location, cache) -> None:
+def template(repository: str, location: str, cache: bool) -> None:
     """Initialize the project with a template from a git repository into a specific location."""
     git_url_check = GIT_URL_REGEX.match(repository)
 

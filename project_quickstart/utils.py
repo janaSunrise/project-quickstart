@@ -10,8 +10,8 @@ import requests
 from colorama import Fore, Style, init as colorama_init
 from git import Repo, exc
 
-from project_quickstart.config import console
-from project_quickstart.languages import Languages
+from .config import console
+from .languages import Languages
 
 colorama_init(autoreset=True)
 
