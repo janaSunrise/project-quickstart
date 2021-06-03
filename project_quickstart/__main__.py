@@ -20,7 +20,7 @@ from .utils import (
     get_project_path,
     git_init,
     make_project_dirs,
-    remove_git_init
+    remove_git_init,
 )
 
 # -- Config --
@@ -37,22 +37,38 @@ def main() -> None:
 
 
 @main.command()
-@option("-l", "--license", is_flag=True, help="Get a license from the library added to your project.")
-@option("-g", "--git", is_flag=True, help="Adding the project to git for quick deploying and getting started with repo")
+@option(
+    "-l",
+    "--license",
+    is_flag=True,
+    help="Get a license from the library added to your project.",
+)
+@option(
+    "-g",
+    "--git",
+    is_flag=True,
+    help="Adding the project to git for quick deploying and getting started with repo",
+)
 def init(license: bool, git: bool) -> None:
     """Get started with your ideas without spending any time on creating the projects."""
     project_path = get_project_path()
-    project_name = inquirer.text(message=f"{Style.BRIGHT}{Fore.YELLOW}Enter the name for the project")
+    project_name = inquirer.text(
+        message=f"{Style.BRIGHT}{Fore.YELLOW}Enter the name for the project"
+    )
 
     # -- Create the project folders --
     project_full_path = os.path.join(project_path, project_name)
     make_project_dirs(project_full_path)
 
     # -- Get project language --
-    lang = inquirer.text(message=f"{Style.BRIGHT}{Fore.CYAN}Enter the language to be used for the project").lower()
-    lang_extension = inquirer.text(message=f"{Style.BRIGHT}{Fore.CYAN}Enter the extension for {lang}").lower()
+    lang = inquirer.text(
+        message=f"{Style.BRIGHT}{Fore.CYAN}Enter the language to be used for the project"
+    ).lower()
+    lang_extension = inquirer.text(
+        message=f"{Style.BRIGHT}{Fore.CYAN}Enter the extension for {lang}"
+    ).lower()
 
-    if not lang_extension.startswith('.'):
+    if not lang_extension.startswith("."):
         lang_extension = f".{lang_extension}"
 
     # -- Create the README.md --
@@ -66,15 +82,15 @@ def init(license: bool, git: bool) -> None:
             choices=[
                 "GNU Affero General Public License v3.0",
                 "Apache License 2.0",
-                "BSD 2-Clause \"Simplified\" License",
-                "BSD 3-Clause \"New\" or \"Revised\" License",
+                'BSD 2-Clause "Simplified" License',
+                'BSD 3-Clause "New" or "Revised" License',
                 "GNU General Public License v2.0",
                 "GNU General Public License v3.0",
                 "GNU Lesser General Public License v2.1",
                 "MIT License",
                 "Mozilla Public License 2.0",
-                "The Unlicense"
-            ]
+                "The Unlicense",
+            ],
         )
 
         create_license(license_choice, project_full_path)
@@ -89,7 +105,9 @@ def init(license: bool, git: bool) -> None:
 
         panel_group = RenderGroup(
             Panel("Summary", style="bold cyan"),
-            Panel(dedent(f"""
+            Panel(
+                dedent(
+                    f"""
                 Project name: {project_name}
                 Project path: {project_full_path}
 
@@ -101,7 +119,10 @@ def init(license: bool, git: bool) -> None:
                 {"✗" if not git else "✓"} Initialized git and gitignore.
 
                 Have an awesome day!
-                """), style="bold cyan")
+                """
+                ),
+                style="bold cyan",
+            ),
         )
         rprint(Panel(panel_group))
 
@@ -113,7 +134,9 @@ def init(license: bool, git: bool) -> None:
 
     panel_group = RenderGroup(
         Panel("Summary", style="bold cyan"),
-        Panel(dedent(f"""
+        Panel(
+            dedent(
+                f"""
         Project name: {project_name}
         Project path: {project_full_path}
 
@@ -125,7 +148,10 @@ def init(license: bool, git: bool) -> None:
         {"✗" if not git else "✓"} Initialized git and gitignore.
 
         Have an awesome day!
-        """), style="bold cyan")
+        """
+            ),
+            style="bold cyan",
+        ),
     )
     rprint(Panel(panel_group))
 
@@ -149,18 +175,24 @@ def template(repository: str, location: str, cache: bool) -> None:
         return
 
     try:
-        with console.status(f"{Style.BRIGHT}{Fore.YELLOW}Cloning the repo...", spinner="dots"):
+        with console.status(
+            f"{Style.BRIGHT}{Fore.YELLOW}Cloning the repo...", spinner="dots"
+        ):
             Repo.clone_from(repository, location)
 
         print(f"{Style.BRIGHT}{Fore.GREEN}Cloned the repo.")
 
-        with console.status(f"{Style.BRIGHT}{Fore.YELLOW}Finalizing the project...", spinner="dots"):
+        with console.status(
+            f"{Style.BRIGHT}{Fore.YELLOW}Finalizing the project...", spinner="dots"
+        ):
             remove_git_init(location)
 
         print(f"{Style.BRIGHT}{Fore.GREEN}Removed git config.")
 
         if cache:
-            with console.status(f"{Style.BRIGHT}{Fore.YELLOW}Caching the template..", spinner="dots"):
+            with console.status(
+                f"{Style.BRIGHT}{Fore.YELLOW}Caching the template..", spinner="dots"
+            ):
                 Repo.clone_from(repository, cache_path)
 
             print(f"{Style.BRIGHT}{Fore.GREEN}Successfully cached the repo.")
@@ -173,7 +205,9 @@ def template(repository: str, location: str, cache: bool) -> None:
 
     panel_group = RenderGroup(
         Panel("Summary", style="bold cyan"),
-        Panel(dedent(f"""
+        Panel(
+            dedent(
+                f"""
             Repository: {repository}
             Template location: {location}
 
@@ -181,7 +215,10 @@ def template(repository: str, location: str, cache: bool) -> None:
             {"✗" if not cache else "✓"} Cached ({cache_path + "/" + git_url_check.group("repository")})
 
             Have an awesome day!
-            """), style="bold cyan")
+            """
+            ),
+            style="bold cyan",
+        ),
     )
     rprint(Panel(panel_group))
 
