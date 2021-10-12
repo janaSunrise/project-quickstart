@@ -6,19 +6,15 @@ env/
 venv/
 .venv
 
+# Editor generated files
+.idea/
+.vscode/
+.spyproject/
+
 # Tests cache
 .pytest_cache/
 
-# Vscode settings
-.vscode/
-
-# Ignore intellij Files (PyCharm)
-.idea
-
-# Ignore spyder Files
-.spyproject/
-
-# Ignore ds store files
+# Mac
 .DS_STORE
 
 # Backup files
@@ -27,9 +23,25 @@ venv/
 # Personal TODO files
 TODO
 
-# Build and package files
-build/
-ProjectQuickstart.egg-info/
-
 # Compiled files
 *.pyc
+
+# Build
+.installed.cfg
+*.egg
+MANIFEST
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
