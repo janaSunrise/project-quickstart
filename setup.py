@@ -3,6 +3,15 @@ from pathlib import Path
 
 import setuptools
 
+# Dependencies
+dependencies = {
+    "requests": "2.25.0",
+    "colorama": "0.4.4",
+    "inquirer": "2.7.0",
+    "click": "7.1.2",
+    "gitpython": "3.1.13",
+}
+
 # Files
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -22,27 +31,35 @@ if not VERSION:
 
 # Setup
 setuptools.setup(
+    # Project info
     name="ProjectQuickstart",
     version=VERSION,
-    author="Sunrit Jana",
-    author_email="warriordefenderz@gmail.com",
+
     description="An easy way to create projects manually, or using templates!",
     long_description=README,
     long_description_content_type="text/markdown",
+
+    # Author info
+    author="Sunrit Jana",
+    author_email="warriordefenderz@gmail.com",
+
+    # Project repo info
     license="MIT",
     url=URL,
     project_urls={"Documentation": URL, "Issue tracker": f"{URL}/issues"},
+
+    # Packages
     packages=setuptools.find_packages(exclude=["tests", "tests.*", "tools", "tools.*"]),
+
+    # CLI entry point
     entry_points={
         "console_scripts": ["project-quickstart = project_quickstart.__main__:main"]
     },
-    install_requires=[
-        "requests==2.25.0",
-        "colorama==0.4.4",
-        "inquirer ==2.7.0",
-        "click==7.1.2",
-        "gitpython==3.1.13",
-    ],
+
+    # Dependencies
+    install_requires=[f"{k}=={v}" for k, v in dependencies.items()],
+
+    # Classifiers
     classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
@@ -56,5 +73,7 @@ setuptools.setup(
         "Intended Audience :: Science/Research",
         "Natural Language :: English",
     ],
+
+    # Minimum python version
     python_requires=">=3.7",
 )
