@@ -3,11 +3,11 @@
 This is a small python project that helps you create your projects in no time!
 
 This can
-- Create the source file
-- Generate The Readme, gitignore, and License
-- Add it to git
+- Create the source file for project
+- Generate The README, gitignore, and LICENSE
+- Initialize git in the project
 - Clone and use a repo as template
-- Perform caching.
+- Perform caching for projects
 
 ## Tech Stack used
 
